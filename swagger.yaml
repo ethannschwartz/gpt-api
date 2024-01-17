@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: OpenAI API Integration
+  version: 1.0.0
+  description: API for interacting with OpenAI's GPT model
+paths:
+  /set-background:
+    post:
+      summary: Set background information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                background:
+                  type: string
+                  example: "Ionic bond, type of linkage formed from the electrostatic attraction between oppositely charged ions in a chemical compound. Such a bond forms when the valence (outermost) electrons of one atom are transferred permanently to another atom."
+      responses:
+        200:
+          description: Background information updated successfully.
+        400:
+          description: Background information is required.
+  /get-response:
+    get:
+      summary: Get response from AI
+      parameters:
+        - in: query
+          name: text
+          schema:
+            type: string
+          required: true
+          description: User input to get response for
+      responses:
+        200:
+          description: AI's response
+        400:
+          description: Text parameter is required.
+        500:
+          description: Error in processing the request.
