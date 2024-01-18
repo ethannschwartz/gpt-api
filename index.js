@@ -19,9 +19,9 @@ let conversationHistory = [];
 const app = express();
 
 // Middleware
-app.use(cors()); // Only if you're dealing with CORS
-app.use(express.json()); // For parsing application/json
-app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = 5002;
@@ -72,7 +72,7 @@ async function main() {
             } else {
                 const response = await getResponse(input);
                 console.log('AI:', response);
-                askQuestion(); // Ask the next question
+                askQuestion();
             }
         });
     };
