@@ -1,4 +1,3 @@
-// don't forget to change name to index.mjs from index.js
 import { createInterface } from 'readline';
 import OpenAI from 'openai';
 import express from 'express';
