@@ -1,4 +1,4 @@
-// don't forget to change name to index.js from index.js
+// don't forget to change name to index.mjs from index.js
 import { createInterface } from 'readline';
 import OpenAI from 'openai';
 import express from 'express';
@@ -27,15 +27,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const port = 5002;
 
 async function getResponse(userInput) {
-    // Add the user's question to the history
     conversationHistory.push({ role: 'user', content: userInput });
 
-    // Use the system message to set context and guidelines
     const systemMessage =
         'Context: You are an AI assistant. Please provide answers based on the provided background information. If the users asks questions with regard other topics, please specify that you are only able to provide information relating to what was provided in the background information.';
     conversationHistory.push({ role: 'system', content: systemMessage });
 
-    // Use a system message to remind the model of the background information
     const backgroundMessage = 'Background information: ' + backgroundInformation;
     conversationHistory.push({ role: 'system', content: backgroundMessage });
 
@@ -47,15 +44,13 @@ async function getResponse(userInput) {
         max_tokens: 50, // Adjust max_tokens as needed
     });
 
-    // Extract the AI's response
-    // Remove the last system messages from conversation history
+    // Remove last system message from conversation
     conversationHistory.pop();
 
     return completion.choices[0].message.content;
 }
 
 async function main() {
-    // Listen on the specified port
     app.listen(port, () => console.log(`Server is running on port ${port}`));
 
     const readline = createInterface({
@@ -63,7 +58,6 @@ async function main() {
         output: process.stdout,
     });
 
-    // Upload and store background information
     await new Promise((resolve) => {
         readline.question('Please enter the background information: ', async (input) => {
             backgroundInformation = input;
