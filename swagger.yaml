@@ -1,41 +1,71 @@
-openapi: 3.0.0
+swagger: '2.0'
 info:
-  title: OpenAI API Integration
-  version: 1.0.0
-  description: API for interacting with OpenAI's GPT model
+  title: OpenAI Chatbot API
+  description: API for interacting with a chatbot powered by OpenAI.
+  version: '1.0.0'
+host: 'localhost:5002'
+schemes:
+  - http
+basePath: '/'
+consumes:
+  - application/json
+produces:
+  - application/json
+
 paths:
   /set-background:
     post:
-      summary: Set background information
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                background:
-                  type: string
-                  example: "Ionic bond, type of linkage formed from the electrostatic attraction between oppositely charged ions in a chemical compound. Such a bond forms when the valence (outermost) electrons of one atom are transferred permanently to another atom."
+      summary: Set Background Information
+      description: Endpoint to set the background information for the chatbot.
+      parameters:
+        - in: body
+          name: background
+          required: true
+          description: The background information to set for the chatbot.
+          schema:
+            type: object
+            required:
+              - background
+            properties:
+              background:
+                type: string
+                example: "Ionic bond, type of linkage formed from the electrostatic attraction between oppositely charged ions in a chemical compound. Such a bond forms when the valence (outermost) electrons of one atom are transferred permanently to another atom."
       responses:
-        200:
+        '200':
           description: Background information updated successfully.
-        400:
-          description: Background information is required.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        '400':
+          description: Invalid request.
+
   /get-response:
     get:
-      summary: Get response from AI
+      summary: Get Chatbot Response
+      description: Endpoint to get a response from the chatbot based on user input.
       parameters:
         - in: query
           name: text
-          schema:
-            type: string
           required: true
-          description: User input to get response for
+          type: string
+          description: User input text to get a response from the chatbot.
       responses:
-        200:
-          description: AI's response
-        400:
-          description: Text parameter is required.
-        500:
-          description: Error in processing the request.
+        '200':
+          description: Successful response from the chatbot.
+          schema:
+            type: object
+            properties:
+              response:
+                type: string
+        '400':
+          description: Text parameter missing.
+        '500':
+          description: Error occurred while processing the request.
+
+securityDefinitions:
+  apiKeyAuth:
+    type: apiKey
+    in: header
+    name: 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

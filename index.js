@@ -56,9 +56,7 @@ async function getResponse(userInput) {
 
 async function main() {
     // Listen on the specified port
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
-    });
+    app.listen(port, () => console.log(`Server is running on port ${port}`));
 
     const readline = createInterface({
         input: process.stdin,
