@@ -4,8 +4,14 @@ import express from 'express';
 import cors from "cors";
 import YAML from 'yamljs';
 import swaggerUi from "swagger-ui-express";
+import * as fs from "fs";
 
-const swaggerDocument = YAML.load('./swagger.yaml');
+fs.readFile('./swagger-output.json', (err, data) => {
+    if (err) throw err;
+    const swaggerDocument = JSON.parse(data);
+
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+});
 
 const openai = new OpenAI({
     organization: 'publify',
@@ -21,7 +27,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = 5002;
 
@@ -52,28 +58,24 @@ async function getResponse(userInput) {
 async function main() {
     app.listen(port, () => console.log(`Server is running on port ${port}`));
 
-    const readline = createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
 
-    await new Promise((resolve) => {
-        readline.question('Please enter the background information: ', async (input) => {
-            backgroundInformation = input;
-            resolve();
-        });
-    });
+    // await new Promise((resolve) => {
+    //     readline.question('Please enter the background information: ', async (input) => {
+            // backgroundInformation = input;
+            // resolve();
+        // });
+    // });
 
     const askQuestion = () => {
-        readline.question('Enter your message: ', async (input) => {
-            if (input.toLowerCase() === 'exit') {
-                readline.close();
-            } else {
-                const response = await getResponse(input);
-                console.log('AI:', response);
-                askQuestion();
-            }
-        });
+        // readline.question('Enter your message: ', async (input) => {
+        //     if (input.toLowerCase() === 'exit') {
+        //         readline.close();
+        //     } else {
+        //         const response = await getResponse(input);
+        //         console.log('AI:', response);
+        //         askQuestion();
+        //     }
+        // });
     };
 
     app.post('/set-background', (req, res) => {
