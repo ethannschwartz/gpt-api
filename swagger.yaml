@@ -1,71 +1,40 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  title: OpenAI Chatbot API
-  description: API for interacting with a chatbot powered by OpenAI.
-  version: '1.0.0'
-host: 'localhost:5002'
+  title: Gpt API
+  description: AI assistant for analysing PDFs.
+  version: "1.0.0"
+host: localhost:5002
+basePath: "/"
 schemes:
   - http
-basePath: '/'
-consumes:
-  - application/json
-produces:
-  - application/json
-
 paths:
   /set-background:
     post:
-      summary: Set Background Information
-      description: Endpoint to set the background information for the chatbot.
+      description: ""
       parameters:
-        - in: body
-          name: background
-          required: true
-          description: The background information to set for the chatbot.
+        - name: body
+          in: body
           schema:
             type: object
-            required:
-              - background
             properties:
               background:
-                type: string
-                example: "Ionic bond, type of linkage formed from the electrostatic attraction between oppositely charged ions in a chemical compound. Such a bond forms when the valence (outermost) electrons of one atom are transferred permanently to another atom."
+                example: any
       responses:
-        '200':
-          description: Background information updated successfully.
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-        '400':
-          description: Invalid request.
-
+        200:
+          description: OK
+        400:
+          description: Bad Request
   /get-response:
     get:
-      summary: Get Chatbot Response
-      description: Endpoint to get a response from the chatbot based on user input.
+      description: ""
       parameters:
-        - in: query
-          name: text
-          required: true
+        - name: text
+          in: query
           type: string
-          description: User input text to get a response from the chatbot.
       responses:
-        '200':
-          description: Successful response from the chatbot.
-          schema:
-            type: object
-            properties:
-              response:
-                type: string
-        '400':
-          description: Text parameter missing.
-        '500':
-          description: Error occurred while processing the request.
-
-securityDefinitions:
-  apiKeyAuth:
-    type: apiKey
-    in: header
-    name: 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
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
