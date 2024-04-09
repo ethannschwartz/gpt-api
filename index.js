@@ -20,7 +20,7 @@ async function generateTextbookChapter(inputText) {
     let conversationHistory = [
         {
             role: 'system',
-            content: 'Convert the following text into a structured textbook chapter with a title, introduction, information, and summary sections.'
+            content: 'Convert the following text into a structured textbook chapter with a title, introduction, information, and summary sections (each with appropriate/sometimes fun title).'
         },
         {
             role: 'user',
