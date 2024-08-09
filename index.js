@@ -4,8 +4,8 @@ import cors from "cors";
 
 // Initialize the OpenAI API with your API key and organization
 const openai = new OpenAI({
-    organization: 'publify',
-    apiKey: "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",
+    organization: process.env.OPENAI_ORGANIZATION,
+    apiKey: process.env.OPENAI_API_KEY,
 });
 
 
@@ -17,6 +17,7 @@ const port = 5002;
 
 // Function to generate textbook chapter content
 async function generateTextbookChapter(inputText) {
+    // The content for the system is the prompt that this instance will use when repsonding to your query.
     let conversationHistory = [
         {
             role: 'system',
